@@ -158,7 +158,7 @@ struct base_station_object *construct_netcdf_grid (
 		base_station[0].daily_clim[0].tmax = (double *) alloc(duration.day * sizeof(double), "tmax",  "construct_netcdf_grid");
 		base_station[0].daily_clim[0].tmin = (double *) alloc(duration.day * sizeof(double), "tmin",  "construct_netcdf_grid");
 		base_station[0].daily_clim[0].rain = (double *) alloc(duration.day * sizeof(double), "rain",  "construct_netcdf_grid");
-		base_station[0].daily_clim[0].wind = (double *) alloc(duration.day * sizeof(double), "wind",  "construct_netcdf_grid"); // T.N
+		//base_station[0].daily_clim[0].wind = (double *) alloc(duration.day * sizeof(double), "wind",  "construct_netcdf_grid"); // T.N
 		/*--------------------------------------------------------------*/
 		/*	initialize the rest of the clim sequences as null	*/
 		/*--------------------------------------------------------------*/
@@ -186,7 +186,7 @@ struct base_station_object *construct_netcdf_grid (
 		base_station[0].daily_clim[0].tavg = NULL;
 		base_station[0].daily_clim[0].tsoil = NULL;
 		base_station[0].daily_clim[0].vpd = NULL;
-		//base_station[0].daily_clim[0].wind = NULL;
+		base_station[0].daily_clim[0].wind = NULL; // T.N
 		base_station[0].daily_clim[0].ndep_NO3 = NULL;
 		base_station[0].daily_clim[0].ndep_NH4 = NULL;
 		
@@ -341,32 +341,32 @@ struct base_station_object *construct_netcdf_grid (
 			//printf("day:%d rain:%f\n", j, base_station[0].daily_clim[0].rain[j]);
 		}
 		
-		/* T.N, Oct. 2015: include wind data */
-		/* ------------------ WIND SPEED ------------------ */
-		k = get_netcdf_var_timeserias(
-									  base_station_ncheader[0].netcdf_wind_filename, 
-									  base_station_ncheader[0].netcdf_wind_varname, 
-									  base_station_ncheader[0].netcdf_y_varname, 
-									  base_station_ncheader[0].netcdf_x_varname, 
-									  net_y, 
-									  net_x, 
-									  base_station_ncheader[0].sdist, 
-									  instartday, 
-									  base_station_ncheader[0].day_offset, 
-									  duration.day, 
-									  tempdata);
-		if (k == -1){
-			fprintf(stderr, "Can't locate station data in netcdf for var wind\n");
-			printf("------------------------------\n");
-			exit(0);
-		}
-		for(j = 0; j < duration.day; j++){
-			base_station[0].daily_clim[0].wind[j] = (double)tempdata[j];
-			if (base_station[0].daily_clim[0].wind[j] < 0.0) {
-				printf("WARNING: day:%d wind:%f < 0.0 \n", j, base_station[0].daily_clim[0].wind[j]);
-			}
-			//printf("day:%d wind:%f\n", j, base_station[0].daily_clim[0].wind[j]);
-		}
+		///* T.N, Oct. 2015: include wind data */
+		///* ------------------ WIND SPEED ------------------ */
+		//k = get_netcdf_var_timeserias(
+									  //base_station_ncheader[0].netcdf_wind_filename, 
+									  //base_station_ncheader[0].netcdf_wind_varname, 
+									  //base_station_ncheader[0].netcdf_y_varname, 
+									  //base_station_ncheader[0].netcdf_x_varname, 
+									  //net_y, 
+									  //net_x, 
+									  //base_station_ncheader[0].sdist, 
+									  //instartday, 
+									  //base_station_ncheader[0].day_offset, 
+									  //duration.day, 
+									  //tempdata);
+		//if (k == -1){
+			//fprintf(stderr, "Can't locate station data in netcdf for var wind\n");
+			//printf("------------------------------\n");
+			//exit(0);
+		//}
+		//for(j = 0; j < duration.day; j++){
+			//base_station[0].daily_clim[0].wind[j] = (double)tempdata[j];
+			//if (base_station[0].daily_clim[0].wind[j] < 0.0) {
+				//printf("WARNING: day:%d wind:%f < 0.0 \n", j, base_station[0].daily_clim[0].wind[j]);
+			//}
+			////printf("day:%d wind:%f\n", j, base_station[0].daily_clim[0].wind[j]);
+		//}
 		
 		/* ------------------ ELEV ------------------ */
 		if (base_station_ncheader[0].elevflag == 0) {

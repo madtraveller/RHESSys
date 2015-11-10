@@ -631,12 +631,12 @@ struct base_station_ncheader_object
         char    netcdf_tmax_filename[MAXSTR];   /* filename for tmax nc file */
         char    netcdf_tmin_filename[MAXSTR];   /* filename for tmin nc file */
         char    netcdf_rain_filename[MAXSTR];   /* filename for rain nc file */
-        char    netcdf_wind_filename[MAXSTR];   /* filename for wind nc file */
+        //char    netcdf_wind_filename[MAXSTR];   /* filename for wind nc file */
         char    netcdf_elev_filename[MAXSTR];   /* filename for elev nc file */
         char    netcdf_tmax_varname[MAXSTR];    /* variable name for tmax in nc file */
         char    netcdf_tmin_varname[MAXSTR];    /* variable name for tmin in nc file */
         char    netcdf_rain_varname[MAXSTR];    /* variable name for rain in nc file */
-        char    netcdf_wind_varname[MAXSTR];    /* variable name for wind in nc file */
+        //char    netcdf_wind_varname[MAXSTR];    /* variable name for wind in nc file */
         char    netcdf_elev_varname[MAXSTR];    /* variable name for elev in nc file */
 };
 /*----------------------------------------------------------*/

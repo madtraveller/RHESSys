@@ -318,8 +318,9 @@ struct zone_object *construct_zone(
 						   (*(zone[0].base_stations[0])).effective_lai,
 						   (*(zone[0].base_stations[0])).daily_clim[0].tmin[0],
 						   (*(zone[0].base_stations[0])).daily_clim[0].tmax[0],
-						   (*(zone[0].base_stations[0])).daily_clim[0].rain[0],
-						   (*(zone[0].base_stations[0])).daily_clim[0].wind[0]);
+						   (*(zone[0].base_stations[0])).daily_clim[0].rain[0]
+						   //(*(zone[0].base_stations[0])).daily_clim[0].wind[0]
+						   ); // T.N
 				}
 			}
 		}

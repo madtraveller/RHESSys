@@ -1,4 +1,4 @@
-PGM  = rhessys5.20.0nov10
+PGM  = rhessys5.20.0nov10_wowind
 VERSION = 5.20.0
 CC = gcc 
 #CFLAGS = -O -std=c99
