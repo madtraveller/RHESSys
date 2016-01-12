@@ -87,6 +87,19 @@ struct base_station_ncheader_object *construct_netcdf_header (
 				base_station_ncheader[0].leap_year = atoi(first);
 			} else if (strcmp(second, "precip_multiplier") == 0){
 				base_station_ncheader[0].precip_mult = atof(first);
+			// T.N Jan 2016: purtubation sensitivity parameter for P & T
+			} else if (strcmp(second, "precip_mult_all") == 0){
+				base_station_ncheader[0].precip_mult_all = atof(first);
+			} else if (strcmp(second, "precip_mult_spring") == 0){
+				base_station_ncheader[0].precip_mult_spring = atof(first);
+			} else if (strcmp(second, "precip_mult_summer") == 0){
+				base_station_ncheader[0].precip_mult_summer = atof(first);
+			} else if (strcmp(second, "precip_mult_fall") == 0){
+				base_station_ncheader[0].precip_mult_fall = atof(first);
+			} else if (strcmp(second, "precip_mult_winter") == 0){
+				base_station_ncheader[0].precip_mult_winter = atof(first);
+			} else if (strcmp(second, "temp_add_annual") == 0){
+				base_station_ncheader[0].temp_add_annual = atof(first);
 			} else if(strcmp(second,"netcdf_var_x") == 0){
 				strcpy(base_station_ncheader[0].netcdf_x_varname,first);
 			} else if(strcmp(second,"netcdf_var_y") == 0){

@@ -639,6 +639,13 @@ struct base_station_ncheader_object
         char    netcdf_rain_varname[MAXSTR];    /* variable name for rain in nc file */
         //char    netcdf_wind_varname[MAXSTR];    /* variable name for wind in nc file */
         char    netcdf_elev_varname[MAXSTR];    /* variable name for elev in nc file */
+        // T.N Jan 2016: purtubation sensitivity parameter for P & T
+        double  precip_mult_all; 				/* pertubation multiplier for all precip */
+        double  precip_mult_spring; 			/* pertubation multiplier for spring precip (Apr - Jun) */
+        double  precip_mult_summer; 			/* pertubation multiplier for summer precip (Jul - Sep) */
+        double  precip_mult_fall; 				/* pertubation multiplier for fall precip (Oct - Dec) */
+        double  precip_mult_winter; 			/* pertubation multiplier for winter precip (Jan - Mar) */
+        double  temp_add_annual; 				/* pertubation addition for all temperature */
 };
 /*----------------------------------------------------------*/
 /*      Define dated climate sequence                       */
