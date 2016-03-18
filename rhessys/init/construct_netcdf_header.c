@@ -66,7 +66,16 @@ struct base_station_ncheader_object *construct_netcdf_header (
 	world[0].num_base_stations = 0;
 	base_station_ncheader[0].lastID = 0;
 	base_station_ncheader[0].elevflag = 0;
-	 
+	
+	// T.N: set default values for T & P pertubation parameters
+	base_station_ncheader[0].precip_mult = 1.0;
+	base_station_ncheader[0].precip_mult_all = 1.0;
+	base_station_ncheader[0].precip_mult_spring = 1.0;
+	base_station_ncheader[0].precip_mult_summer = 1.0;
+	base_station_ncheader[0].precip_mult_fall = 1.0;
+	base_station_ncheader[0].precip_mult_winter = 1.0;
+	base_station_ncheader[0].temp_add_annual = 0.0;
+	
 	fseek(base_station_file,0,SEEK_SET);	
 	baseid = -1;
 	/* T.N, Oct 2015: include wind data */

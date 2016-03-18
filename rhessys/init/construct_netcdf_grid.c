@@ -250,9 +250,9 @@ struct base_station_object *construct_netcdf_grid (
 		}
 		for (j = 0; j < duration.day; j++){
 			// T.N Jan 2016: purtubation sensitivity parameter for P & T
-			printf("Before - Day:%d tmax:%f\n", j, (double)tempdata[j]);
+			//printf("Before - Day:%d tmax:%f\n", j, (double)tempdata[j]);
 			base_station[0].daily_clim[0].tmax[j] = (double)tempdata[j] + base_station_ncheader[0].temp_add_annual;
-			printf("After - Day:%d tmax:%f\n", j, base_station[0].daily_clim[0].tmax[j]);
+			//printf("After - Day:%d tmax:%f\n", j, base_station[0].daily_clim[0].tmax[j]);
 		}
 		
 		for (j = 0; j < duration.day; j++){
@@ -337,73 +337,80 @@ struct base_station_object *construct_netcdf_grid (
 			exit(0);
 		}
 		
+		for(j=0;j<duration.day;j++){
+			//base_station[0].daily_clim[0].rain[j] = (double)tempdata[j] * base_station_ncheader[0].precip_mult;
+			base_station[0].daily_clim[0].rain[j] = (double)tempdata[j] * base_station_ncheader[0].precip_mult_all;			
+			/*printf("day:%d rain:%f\n",j,base_station[0].daily_clim[0].rain[j]);*/
+		}
+		
 		// T.N Jan 2016: purtubation sensitivity parameter for P & T
 		// Pertubation for seasons (summer and winter) or all year
-		if ( duration.day > 365 ) { // Leap year
-			if ( (base_station_ncheader[0].precip_mult_summer != -9999.0) && (base_station_ncheader[0].precip_mult_winter != -9999.0) ) { // Pertubation for summer and winter separatedly
-				for(j = 0; j < duration.day; j++) {
-					if ( j < 92 ) { // Winter months
-						printf("Before - Day: %d rain: %f\n", j, (double)tempdata[j]);
-						base_station[0].daily_clim[0].rain[j] = (double)tempdata[j] * base_station_ncheader[0].precip_mult_winter;
-						printf("After - Day: %d rain: %f\n", j, base_station[0].daily_clim[0].rain[j]);
-						if (base_station[0].daily_clim[0].rain[j] < 0.0) {
-							printf("WARNING: day: %d precip: %f < 0.0 \n", j, base_station[0].daily_clim[0].rain[j]);
-						}
-					} else if ( (j > 182) && (j < 275) ) { // Summer months
-						base_station[0].daily_clim[0].rain[j] = (double)tempdata[j] * base_station_ncheader[0].precip_mult_summer;
-						if (base_station[0].daily_clim[0].rain[j] < 0.0) {
-							printf("WARNING: day: %d precip: %f < 0.0 \n", j, base_station[0].daily_clim[0].rain[j]);
-						}
-					} else {
-						base_station[0].daily_clim[0].rain[j] = (double)tempdata[j] * base_station_ncheader[0].precip_mult_all;
-						if (base_station[0].daily_clim[0].rain[j] < 0.0) {
-							printf("WARNING: day:%d precip:%f < 0.0 \n", j, base_station[0].daily_clim[0].rain[j]);
-						}
-					}
-				}				
-			} else { // Pertubation for the whole data series
-				for(j = 0; j < duration.day; j++) {
-					printf("Before - Day: %d rain: %f\n", j, (double)tempdata[j]);
-					base_station[0].daily_clim[0].rain[j] = (double)tempdata[j] * base_station_ncheader[0].precip_mult_all;
-					printf("After - Day: %d rain: %f\n", j, base_station[0].daily_clim[0].rain[j]);
-					if (base_station[0].daily_clim[0].rain[j] < 0.0) {
-						printf("WARNING: day:%d precip:%f < 0.0 \n", j, base_station[0].daily_clim[0].rain[j]);
-					}
-				}		
-			}
-		} else { // Non-leap year
-			if ( (base_station_ncheader[0].precip_mult_summer != -9999.0) && (base_station_ncheader[0].precip_mult_winter != -9999.0) ) { // Pertubation for summer and winter separatedly
-				for(j = 0; j < duration.day; j++) {
-					if ( j < 91 ) { // Winter months
-						printf("Before - Day: %d rain: %f\n", j, (double)tempdata[j]);
-						base_station[0].daily_clim[0].rain[j] = (double)tempdata[j] * base_station_ncheader[0].precip_mult_winter;
-						printf("After - Day: %d rain: %f\n", j, base_station[0].daily_clim[0].rain[j]);
-						if (base_station[0].daily_clim[0].rain[j] < 0.0) {
-							printf("WARNING: day: %d precip: %f < 0.0 \n", j, base_station[0].daily_clim[0].rain[j]);
-						}
-					} else if ( (j > 181) && (j < 274) ) { // Summer months
-						base_station[0].daily_clim[0].rain[j] = (double)tempdata[j] * base_station_ncheader[0].precip_mult_summer;
-						if (base_station[0].daily_clim[0].rain[j] < 0.0) {
-							printf("WARNING: day: %d precip: %f < 0.0 \n", j, base_station[0].daily_clim[0].rain[j]);
-						}
-					} else {
-						base_station[0].daily_clim[0].rain[j] = (double)tempdata[j] * base_station_ncheader[0].precip_mult_all;
-						if (base_station[0].daily_clim[0].rain[j] < 0.0) {
-							printf("WARNING: day:%d precip:%f < 0.0 \n", j, base_station[0].daily_clim[0].rain[j]);
-						}
-					}
-				}				
-			} else { // Pertubation for the whole data series
-				for(j = 0; j < duration.day; j++) {
-					printf("Before - Day: %d rain: %f\n", j, (double)tempdata[j]);
-					base_station[0].daily_clim[0].rain[j] = (double)tempdata[j] * base_station_ncheader[0].precip_mult_all;
-					printf("After - Day: %d rain: %f\n", j, base_station[0].daily_clim[0].rain[j]);
-					if (base_station[0].daily_clim[0].rain[j] < 0.0) {
-						printf("WARNING: day:%d precip:%f < 0.0 \n", j, base_station[0].daily_clim[0].rain[j]);
-					}
-				}		
-			}
-		}
+		//if ( duration.day > 365 ) { // Leap year
+			//if ( (base_station_ncheader[0].precip_mult_summer != -9999.0) && (base_station_ncheader[0].precip_mult_winter != -9999.0) ) { // Pertubation for summer and winter separatedly
+				//for(j = 0; j < duration.day; j++) {
+					//if ( j < 92 ) { // Winter months
+						//printf("Before - Day: %d rain: %f\n", j, (double)tempdata[j]);
+						//base_station[0].daily_clim[0].rain[j] = (double)tempdata[j] * base_station_ncheader[0].precip_mult_winter;
+						//printf("After - Day: %d rain: %f\n", j, base_station[0].daily_clim[0].rain[j]);
+						//if (base_station[0].daily_clim[0].rain[j] < 0.0) {
+							//printf("WARNING: day: %d precip: %f < 0.0 \n", j, base_station[0].daily_clim[0].rain[j]);
+						//}
+					//} else if ( (j > 182) && (j < 275) ) { // Summer months
+						//base_station[0].daily_clim[0].rain[j] = (double)tempdata[j] * base_station_ncheader[0].precip_mult_summer;
+						//if (base_station[0].daily_clim[0].rain[j] < 0.0) {
+							//printf("WARNING: day: %d precip: %f < 0.0 \n", j, base_station[0].daily_clim[0].rain[j]);
+						//}
+					//} else {
+						//base_station[0].daily_clim[0].rain[j] = (double)tempdata[j] * base_station_ncheader[0].precip_mult_all;
+						//if (base_station[0].daily_clim[0].rain[j] < 0.0) {
+							//printf("WARNING: day:%d precip:%f < 0.0 \n", j, base_station[0].daily_clim[0].rain[j]);
+						//}
+					//}
+				//}				
+			//} else { // Pertubation for the whole data series
+				//for(j = 0; j < duration.day; j++) {
+					//printf("Before - Day: %d rain: %f\n", j, (double)tempdata[j]);
+					//base_station[0].daily_clim[0].rain[j] = (double)tempdata[j] * base_station_ncheader[0].precip_mult_all;
+					//printf("After - Day: %d rain: %f\n", j, base_station[0].daily_clim[0].rain[j]);
+					//if (base_station[0].daily_clim[0].rain[j] < 0.0) {
+						//printf("WARNING: day:%d precip:%f < 0.0 \n", j, base_station[0].daily_clim[0].rain[j]);
+					//}
+				//}		
+			//}
+		//} else { // Non-leap year
+			//if ( (base_station_ncheader[0].precip_mult_summer != -9999.0) && (base_station_ncheader[0].precip_mult_winter != -9999.0) ) { // Pertubation for summer and winter separatedly
+				//for(j = 0; j < duration.day; j++) {
+					//if ( j < 91 ) { // Winter months
+						//printf("Before - Day: %d rain: %f\n", j, (double)tempdata[j]);
+						//base_station[0].daily_clim[0].rain[j] = (double)tempdata[j] * base_station_ncheader[0].precip_mult_winter;
+						//printf("After - Day: %d rain: %f\n", j, base_station[0].daily_clim[0].rain[j]);
+						//if (base_station[0].daily_clim[0].rain[j] < 0.0) {
+							//printf("WARNING: day: %d precip: %f < 0.0 \n", j, base_station[0].daily_clim[0].rain[j]);
+						//}
+					//} else if ( (j > 181) && (j < 274) ) { // Summer months
+						//base_station[0].daily_clim[0].rain[j] = (double)tempdata[j] * base_station_ncheader[0].precip_mult_summer;
+						//if (base_station[0].daily_clim[0].rain[j] < 0.0) {
+							//printf("WARNING: day: %d precip: %f < 0.0 \n", j, base_station[0].daily_clim[0].rain[j]);
+						//}
+					//} else {
+						//base_station[0].daily_clim[0].rain[j] = (double)tempdata[j] * base_station_ncheader[0].precip_mult_all;
+						//if (base_station[0].daily_clim[0].rain[j] < 0.0) {
+							//printf("WARNING: day:%d precip:%f < 0.0 \n", j, base_station[0].daily_clim[0].rain[j]);
+						//}
+					//}
+				//}				
+			//} else { // Pertubation for the whole data series
+				//for(j = 0; j < duration.day; j++) {
+					//printf("Before - Day: %d rain: %f\n", j, (double)tempdata[j]);
+					//base_station[0].daily_clim[0].rain[j] = (double)tempdata[j] * base_station_ncheader[0].precip_mult_all;
+					//printf("After - Day: %d rain: %f\n", j, base_station[0].daily_clim[0].rain[j]);
+					//if (base_station[0].daily_clim[0].rain[j] < 0.0) {
+						//printf("WARNING: day:%d precip:%f < 0.0 \n", j, base_station[0].daily_clim[0].rain[j]);
+					//}
+				//}		
+			//}
+		//}
+		
 		///* T.N, Oct. 2015: include wind data */
 		///* ------------------ WIND SPEED ------------------ */
 		//k = get_netcdf_var_timeserias(

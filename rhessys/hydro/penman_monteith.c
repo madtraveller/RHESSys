@@ -158,18 +158,18 @@ double	penman_monteith(
 	// http://www.fao.org/docrep/x0490e/x0490e04.htm
 	// http://www.bom.gov.au/watl/eto/tables/qld/daily.shtml
 	// convert e from W/m2 to mm/day first
-	e_mm = ( 86400.0 * e ) / ( lhvap * 1000.0 );
+	//e_mm = ( 86400.0 * e ) / ( lhvap * 1000.0 );
 
-	if ( e_mm >= 10.0) { // daily PET higher than 10mm/day
-	  printf("!!!!! WARNING: PET is too high \n");
-	  printf("PENMAN: s=%8.4f ra=%8.4f rs=%8.4f Rnet=%8.4f gamma=%8.4f vpd=%8.4f rho=%8.4f CP=%8.4f Tair=%lf Pair=%lf LE=%8.4f e_mm/day=%8.4f \n",
-		 s, ra, rs,
-		 Rnet, gamma, vpd,
-		 rho, CP,
-		 Tair, Pair,
-		 e,
-		 e_mm);
-        }
+	//if ( e_mm >= 10.0) { // daily PET higher than 10mm/day
+	  //printf("!!!!! WARNING: PET is too high \n");
+	  //printf("PENMAN: s=%8.4f ra=%8.4f rs=%8.4f Rnet=%8.4f gamma=%8.4f vpd=%8.4f rho=%8.4f CP=%8.4f Tair=%lf Pair=%lf LE=%8.4f e_mm/day=%8.4f \n",
+		 //s, ra, rs,
+		 //Rnet, gamma, vpd,
+		 //rho, CP,
+		 //Tair, Pair,
+		 //e,
+		 //e_mm);
+    //}
 	
 	/*--------------------------------------------------------------*/
 	/*	Perform conversion if needed and return			*/
@@ -192,8 +192,8 @@ double	penman_monteith(
 		/*--------------------------------------------------------------*/
 		if ( verbose_flag > 2)
 			printf("%8.4f",e );
-		//return( e / ( lhvap * 1000 ));
-		return( min(e / ( lhvap * 1000 ), 10.0/86400) ); // T.N: impose max 10 mm/day per FAO data
+		return( e / ( lhvap * 1000 ));
+		//return( min(e / ( lhvap * 1000 ), 10.0/86400) ); // T.N: impose max 10 mm/day per FAO data
 	}
 	else{
 		fprintf(stderr,"FATAL ERROR: in penman_monteith - invalid output flag");
