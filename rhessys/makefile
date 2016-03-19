@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 PGM  = rhessys5.20.0_pertu
 VERSION = 5.20.0
+=======
+VERSION = 5.20.1
+PGM  = rhessys$(VERSION)
+>>>>>>> upstream/77-unsat-rzone-calc-consist
 CC = gcc 
 #CFLAGS = -O -std=c99
 CFLAGS = -Wall -g -fopenmp -std=c99
