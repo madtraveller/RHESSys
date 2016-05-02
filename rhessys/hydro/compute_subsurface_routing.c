@@ -351,6 +351,17 @@ void compute_subsurface_routing(struct command_line_object *command_line,
 				patch[0].surface_DOC_Qin = 0.0;
 
 			}
+			
+			/* ************** This is done by each hour ****************** */
+            		/* T.N Apr 2016: move out of [if (k == (n_timesteps - 1))] because
+            		// it doesn't depend on that if statement below. Keep in mind that
+            		// patch[0].hourly_subsur2stream_flow & patch[0].hourly_sur2stream_flow
+            		// are updated every time step from update_drainage_land & stream
+            		// e.g. patch[0].hourly_subsur2stream_flow += route_to_stream / patch[0].area;
+            		*/
+            		patch[0].hourly_stream_flow += patch[0].hourly_subsur2stream_flow
+                                           		+ patch[0].hourly_sur2stream_flow;
+			
 			/*--------------------------------------------------------------*/
 			/*	finalize streamflow and saturation deficits		*/
 			/*								*/
@@ -359,13 +370,14 @@ void compute_subsurface_routing(struct command_line_object *command_line,
 			/* 	some streamflow may have already been accumulated from 	*/
 			/* 	redirected streamflow					*/
 			/*	water balance calculations				*/
-			/* only on last iteration					*/
+			/* 	only on last iteration					*/
 			/* **** note that streamflow is updated sequentially		*/
 			/*	i.e not at the end; it is similar to Qout, in		*/
 			/*	that it accumulates flux in from patches		*/
 			/*	(roads) that direct water to the stream			*/
 			/*--------------------------------------------------------------*/
-			if (k >=0){// (n_timesteps - 1))
+			/* T.N Apr 2016: back to 5.18, only update fluxes at the end of the day */
+			if (k == (n_timesteps - 1)) {// (n_timesteps - 1))
 				      
 			      if ((patch[0].sat_deficit
 						- (patch[0].unsat_storage + patch[0].rz_storage))
@@ -948,40 +960,36 @@ void compute_subsurface_routing(struct command_line_object *command_line,
 
 
 
-				/* ******************************** this is done by each hour*/
-				patch[0].hourly_stream_flow += patch[0].hourly_subsur2stream_flow
-							  + patch[0].hourly_sur2stream_flow;
-			
-				basin[0].basin_return_flow += (patch[0].return_flow) * patch[0].area;							  
-				/*--------------------------------------------------------------*/
-				/* final stream flow calculations				*/
-				/*--------------------------------------------------------------*/
+                		/* T.N. Apr 2016: Back to the old version */
+                		/* https://github.com/RHESSys/RHESSys/blob/4fc143cc63d4e651e383e90a4c65cce16760e8e3/rhessys/hydro/compute_subsurface_routing.c#L737 */
 
-				basin[0].basin_outflow += (patch[0].streamflow) * patch[0].area;
-				basin[0].basin_unsat_storage += patch[0].unsat_storage * patch[0].area;
-				basin[0].basin_sat_deficit += patch[0].sat_deficit * patch[0].area;
-				basin[0].basin_rz_storage += patch[0].rz_storage * patch[0].area;
-				basin[0].basin_detention_store += patch[0].detention_store
-						* patch[0].area;
+                		/*---------------------------------------------------------------------*/
+                		/* Update daily output: the patch[0].base_flow and patch[0].return_flow
+                		// * is the summation of 24 hours return_flow and base_flow from previous
+                		// * calculation */
+                		/*-----------------------------------------------------------------------*/
+
+		                if (patch[0].drainage_type == STREAM)
+		                {
+		                    patch[0].streamflow += patch[0].return_flow
+		                                           + patch[0].base_flow;
+		                }
+		
+		                basin[0].basin_outflow += (patch[0].streamflow) * patch[0].area;
+		                basin[0].basin_return_flow += (patch[0].return_flow) * patch[0].area;
+		
+		                basin[0].basin_detention_store += patch[0].detention_store
+		                                                  * patch[0].area;
+		                basin[0].basin_sat_deficit += patch[0].sat_deficit * patch[0].area;
+		                basin[0].basin_rz_storage += patch[0].rz_storage * patch[0].area;
+		                basin[0].basin_unsat_storage += patch[0].unsat_storage * patch[0].area;
 				
 				/*---------------------------------------------------------------------*/
-				/*update accumulator variables                                            */
+				/* update accumulator variables                                            */
 				/*-----------------------------------------------------------------------*/
 				/* the accumulator is updated in update_basin_patch_accumulator.c in basin_daily_F.c*/
 
-
 			}
-				/*---------------------------------------------------------------------*/
-				/*update daily output: the patch[0].base_flow and patch[0].return_flow
-				 * is the summation of 24 hours return_flow and base_flow from previous 
-				 * calculation*/
-				/*-----------------------------------------------------------------------*/
-				if(k==n_timesteps-1){
-				    if (patch[0].drainage_type == STREAM) {
-					    patch[0].streamflow += patch[0].return_flow
-							    + patch[0].base_flow;
-				    }
-				}
 
 		} /* end i */
 
