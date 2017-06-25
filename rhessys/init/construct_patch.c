@@ -65,8 +65,10 @@ struct patch_object *construct_patch(
 		struct	default_object	*defaults);
 	struct 	canopy_strata_object *construct_empty_shadow_strata( 
 		struct command_line_object *,
+		FILE	*,
 		struct	patch_object *,
-		struct  canopy_strata_object *stratum,
+		int     num_world_base_stations,
+		struct  base_station_object **world_base_stations,
 		struct	default_object	*defaults);
 	double	compute_z_final( 	int,
 		double,
@@ -657,10 +659,10 @@ struct patch_object *construct_patch(
 	for ( i=0 ; i<patch[0].num_canopy_strata ; i++ ){
 		patch[0].shadow_strata[i] = construct_empty_shadow_strata(
 			command_line,
+			world_file,
 			patch,
-			patch[0].canopy_strata[i],
-      defaults);     
- 
+      patch[0].canopy_strata[i],
+      defaults);
 		patch[0].shadow_strata[i][0].ID = patch[0].canopy_strata[i][0].ID;
 		patch[0].shadow_strata[i][0].defaults = patch[0].canopy_strata[i][0].defaults;
 		patch[0].shadow_strata[i][0].base_stations = patch[0].canopy_strata[i][0].base_stations;
