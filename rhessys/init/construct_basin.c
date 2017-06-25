@@ -75,7 +75,7 @@ struct basin_object *construct_basin(
 								int,
 								int,
 								struct base_station_object **);
-	
+
 	struct hillslope_object *construct_hillslope(
 		struct	command_line_object *,
 		FILE    *,
@@ -84,11 +84,11 @@ struct basin_object *construct_basin(
 		struct	default_object *,
 		struct base_station_ncheader_object *,
 		struct world_object *);
-	
+
 	void	*alloc( 	size_t, char *, char *);
-	
+
 	void	sort_by_elevation( struct basin_object *);
-	
+
 //	struct routing_list_object construct_ddn_routing_topology(
 //		char *,
 //		struct basin_object *);
@@ -97,12 +97,12 @@ struct basin_object *construct_basin(
 //		char *,
 //		struct basin_object *,
 //		struct	command_line_object *);
-	
+
 	struct stream_list_object construct_stream_routing_topology(
 		char *,
-		struct basin_object *, 
+		struct basin_object *,
 		struct	command_line_object *);
-	
+
 	/*--------------------------------------------------------------*/
 	/*	Local variable definition.									*/
 	/*--------------------------------------------------------------*/
@@ -113,13 +113,13 @@ struct basin_object *construct_basin(
 	double		n_routing_timesteps;
 	char		record[MAXSTR];
 	struct basin_object	*basin;
-	
+
 	/*--------------------------------------------------------------*/
 	/*	Allocate a basin object.								*/
 	/*--------------------------------------------------------------*/
 	basin = (struct basin_object *) alloc( 1 *
 		sizeof( struct basin_object ),"basin","construct_basin");
-	
+
 	/*--------------------------------------------------------------*/
 	/*	Read in the basinID.									*/
 	/*--------------------------------------------------------------*/
@@ -137,13 +137,13 @@ struct basin_object *construct_basin(
 	read_record(world_file, record);
 	fscanf(world_file,"%d",&(basin[0].num_base_stations));
 	read_record(world_file, record);
-	
+
 	/*--------------------------------------------------------------*/
 	/*	Create cosine of latitude to save future computations.		*/
 	/*--------------------------------------------------------------*/
 	basin[0].cos_latitude = cos(basin[0].latitude*DtoR);
 	basin[0].sin_latitude = sin(basin[0].latitude*DtoR);
-	
+
 	/*--------------------------------------------------------------*/
 	/*    Allocate a list of base stations for this basin.			*/
 	/*--------------------------------------------------------------*/
@@ -154,7 +154,7 @@ struct basin_object *construct_basin(
 	/*      Read each base_station ID and then point to that base_statio*/
 	/*--------------------------------------------------------------*/
 	for (i=0 ; i<basin[0].num_base_stations; i++) {
-    
+
 		fscanf(world_file,"%d",&(base_stationID));
     printf( "*** RECORD %d ***\n", i );
 		read_record(world_file, record);
@@ -167,7 +167,7 @@ struct basin_object *construct_basin(
 			base_stationID,
 			*num_world_base_stations,
 			world_base_stations);
-		
+
 	} /*end for*/
 	/*--------------------------------------------------------------*/
 	/*	Create the grow subobject if needed.						*/
@@ -209,7 +209,7 @@ struct basin_object *construct_basin(
 	/*--------------------------------------------------------------*/
 	fscanf(world_file,"%d",&(basin[0].num_hillslopes));
 	read_record(world_file, record);
-	
+
 	/*--------------------------------------------------------------*/
 	/*	Allocate a list of pointers to hillslope objects.			*/
 	/*--------------------------------------------------------------*/
@@ -225,7 +225,7 @@ struct basin_object *construct_basin(
 	/*	Construct the hillslopes for this basin.					*/
 	/*--------------------------------------------------------------*/
     for (int i=0; i<basin[0].num_hillslopes; i++){
-      printf("reading hillslope %d\n", i);
+        // printf("reading hillslope %d\n", i); T.N
 		basin[0].hillslopes[i] = construct_hillslope(
 			command_line, world_file, num_world_base_stations,
 			world_base_stations, defaults, base_station_ncheader, world);
@@ -236,22 +236,22 @@ struct basin_object *construct_basin(
 			basin[0].max_slope = basin[0].hillslopes[i][0].slope;
 		if (command_line[0].snow_scale_flag == 1) {
 			for (z = 0; z < basin[0].hillslopes[i][0].num_zones; z++) {
-				for (j=0; j < basin[0].hillslopes[i][0].zones[z][0].num_patches; j++) { 
+				for (j=0; j < basin[0].hillslopes[i][0].zones[z][0].num_patches; j++) {
 				check_snow_scale +=
 				basin[0].hillslopes[i][0].zones[z][0].patches[j][0].snow_redist_scale *
 				basin[0].hillslopes[i][0].zones[z][0].patches[j][0].area;
 				}
-			}	
+			}
 		}
 	};
   printf("hillslopes complete\n");
 
-	basin[0].defaults[0][0].n_routing_timesteps = 
+	basin[0].defaults[0][0].n_routing_timesteps =
 			(int) (n_routing_timesteps / basin[0].area);
 
 	if (basin[0].defaults[0][0].n_routing_timesteps < 1)
 		basin[0].defaults[0][0].n_routing_timesteps = 1;
- 
+
 	if (command_line[0].snow_scale_flag == 1) {
 		check_snow_scale /= basin[0].area;
 		if (fabs(check_snow_scale - 1.0) > ZERO	) {
@@ -260,9 +260,9 @@ struct basin_object *construct_basin(
 			printf("\n Snow rescaling will alter net precip input by this scale factor\n\n");
 			}
 		if (command_line[0].snow_scale_tol > ZERO) {
-			if ((check_snow_scale > command_line[0].snow_scale_tol) || 
+			if ((check_snow_scale > command_line[0].snow_scale_tol) ||
 				(check_snow_scale < 1/command_line[0].snow_scale_tol)) {
-				printf("Basin-wide  average snow scale %lf is outside tolerance %lf", 
+				printf("Basin-wide  average snow scale %lf is outside tolerance %lf",
 				check_snow_scale, command_line[0].snow_scale_tol);
 				printf("\n Exiting\n");
 				exit(EXIT_FAILURE);
@@ -358,7 +358,7 @@ struct basin_object *construct_basin(
 		// in the basin, in no particular order.
 		basin->route_list = construct_topmodel_patchlist(basin);
 	}
-	
+
 	/*--------------------------------------------------------------*/
 	/*	Read in stream routing topology if needed	*/
 	/*--------------------------------------------------------------*/
@@ -366,7 +366,7 @@ struct basin_object *construct_basin(
 			basin[0].stream_list = construct_stream_routing_topology( command_line[0].stream_routing_filename, basin,
 						command_line);
 	}
-		else { 
+		else {
 			basin[0].stream_list.stream_network = NULL;
 			basin[0].stream_list.streamflow = 0.0;
 		}

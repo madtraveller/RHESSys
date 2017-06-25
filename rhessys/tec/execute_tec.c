@@ -84,7 +84,7 @@
 /*	10.			if the year of the new date does not equal that*/
 /*					of the last day's date increment the year 	*/
 /*	11. 		increment the hour								*/
-/*	12. 		goto 5											*/ 
+/*	12. 		goto 5											*/
 /*	13.		At the moment there is no event handling here.		*/
 /*	14.		goto 2												*/
 /*--------------------------------------------------------------*/
@@ -103,39 +103,39 @@ void	execute_tec(
 	/*	Local Function Declarations.								*/
 	/*--------------------------------------------------------------*/
 	int		cal_date_lt(struct date, struct date );
-	
+
 	long	julday( struct date );
-	
+
 	struct	date	caldat( long );
-	
+
 	struct	tec_entry	*construct_tec_entry( struct date, char * );
-	
+
 	void	world_daily_I(
 		long,
 		struct world_object *,
 		struct command_line_object *,
 		struct tec_entry *,
 		struct date);
-	
+
 	void	world_hourly(
 		struct world_object *,
 		struct command_line_object *,
 		struct tec_entry *,
 		struct date);
-	
+
 	void	world_daily_F(
 		long,
 		struct world_object *,
 		struct command_line_object *,
 		struct tec_entry *,
 		struct date);
-	
+
 	void	handle_event(
 		struct	tec_entry	*,
 		struct	command_line_object	*,
 		struct	date,
 		struct	world_object	*);
-	
+
 	void	execute_yearly_growth_output_event(
 		struct	world_object	*,
 		struct	command_line_object	*,
@@ -147,13 +147,13 @@ void	execute_tec(
 		struct	command_line_object	*,
 		struct	date,
 		struct	world_output_file_object *);
-	
+
 	void	execute_daily_output_event(
 		struct	world_object	*,
 		struct	command_line_object	*,
 		struct	date,
 		struct	world_output_file_object *);
-	
+
 	void	execute_daily_growth_output_event(
 		struct	world_object	*,
 		struct	command_line_object	*,
@@ -165,7 +165,7 @@ void	execute_tec(
 		struct	command_line_object	*,
 		struct	date,
 		struct	world_output_file_object *);
-	
+
 	void	execute_hourly_output_event(
 		struct	world_object	*,
 		struct	command_line_object	*,
@@ -176,7 +176,7 @@ void	execute_tec(
 		struct	world_object	*,
 		struct	command_line_object	*,
 		struct	date);
-	
+
 	void	execute_state_output_event(
 		struct world_object *,
 		struct date,
@@ -194,7 +194,7 @@ void	execute_tec(
 	struct	date	current_date;
 	struct	date	next_date;
 	struct	tec_entry	*event;
-	
+
 	/*--------------------------------------------------------------*/
 	/*	Initialize the indices into the base station clime sequences*/
 	/*--------------------------------------------------------------*/
@@ -202,13 +202,13 @@ void	execute_tec(
 	month = 0;
 	day = 0;
 	hour = 0;
-	
+
 	/*--------------------------------------------------------------*/
 	/*	Initialize the tec event									*/
 	/*--------------------------------------------------------------*/
-	
+
 	event =  construct_tec_entry(world[0].end_date,"none");
-	
+
 	/*--------------------------------------------------------------*/
 	/*	Loop from the start of the world to the end of the world.	*/
 	/*--------------------------------------------------------------*/
@@ -263,7 +263,7 @@ void	execute_tec(
 			/*--------------------------------------------------------------*/
 			/*			Simulate the world for the start of this day e		*/
 			/*--------------------------------------------------------------*/
-            if ( current_date.hour == 1 ) printf("Current_date year = %d mon = %d day = %d\r",
+            if ( current_date.hour == 1 ) printf("Current_date: Year = %d | Mon = %d | Day = %d\r", // T.N format
                    current_date.year,current_date.month,current_date.day);
             //fflush(stdout);
 			if ( current_date.hour == 1 ){
@@ -281,7 +281,7 @@ void	execute_tec(
 				command_line,
 				event,
                 current_date);
-			
+
 			/*--------------------------------------------------------------*/
 			/*			Perform any requested hourly output					*/
 			/*--------------------------------------------------------------*/
@@ -296,11 +296,11 @@ void	execute_tec(
 			if(command_line[0].output_flags.hourly_growth ==1 &&
 					(command_line[0].grow_flag > 0) ){
 				  execute_hourly_growth_output_event(
-							      world, 
-							      command_line, 
-							      current_date, 
+							      world,
+							      command_line,
+							      current_date,
 							      growth_outfile);
-				  
+
 				};
 			/*--------------------------------------------------------------*/
 			/*			Increment to the next hour.							*/
@@ -345,7 +345,7 @@ void	execute_tec(
 		      execute_state_output_event(world, current_date, world[0].end_date,command_line);
           printf("\nSpinup completed YEAR %d MONTH %d DAY %d \n", current_date.year,current_date.month,current_date.day);
           exit(0);
-        } 
+        }
 
 				/*--------------------------------------------------------------*/
 				/*			Perform any requested yearly output					*/
@@ -400,8 +400,8 @@ void	execute_tec(
 						world,
 						command_line,
 						current_date);
-				}	
-				
+				}
+
 				/*--------------------------------------------------------------*/
 				/*			Perform any requested monthly output				*/
 				/*--------------------------------------------------------------*/
@@ -424,7 +424,7 @@ void	execute_tec(
 				/*--------------------------------------------------------------*/
 				/*				Do yearly stuff.								*/
 				/*--------------------------------------------------------------*/
-				
+
 				/*--------------------------------------------------------------*/
 				/*				increment year  								*/
 				/*-------------------------------------------------------------*/

@@ -48,7 +48,7 @@ int update_gw_drainage(
 	/*------------------------------------------------------*/
 	/*	Local Function Declarations.			*/
 	/*------------------------------------------------------*/
-	
+
 	double  compute_z_final(
 		int,
 		double,
@@ -72,12 +72,16 @@ int update_gw_drainage(
 	if (zone[0].hourly_rain_flag==1){
 	  sat_to_gw_coeff = patch[0].soil_defaults[0][0].sat_to_gw_coeff / 24;
 	}
-	else sat_to_gw_coeff = patch[0].soil_defaults[0][0].sat_to_gw_coeff; 
+	else sat_to_gw_coeff = patch[0].soil_defaults[0][0].sat_to_gw_coeff;
 
 	drainage = sat_to_gw_coeff * patch[0].detention_store;
 	patch[0].detention_store -= drainage;
 	patch[0].gw_drainage = drainage;
 	hillslope[0].gw.storage += (drainage * patch[0].area / hillslope[0].area);
+
+	/* T.N: April 2016 */
+    // This drainage can also be considered recharge to gw (bypass)
+    patch[0].recharge += drainage;
 
 	/*------------------------------------------------------*/
 	/*	determine associated N leached			*/
@@ -94,15 +98,15 @@ int update_gw_drainage(
 		patch[0].cdf.DOC_to_gw += N_loss;
 		patch[0].surface_DOC -= N_loss;
 		}
-	
-	
+
+
 	if (patch[0].surface_NH4 > ZERO) {
 		N_loss = sat_to_gw_coeff * patch[0].surface_NH4;
 		hillslope[0].gw.NH4 += (N_loss * patch[0].area / hillslope[0].area);
 		patch[0].ndf.N_to_gw += N_loss;
 		patch[0].surface_NH4 -= N_loss;
 		}
-	
+
 	if (patch[0].surface_NO3 > ZERO) {
 		N_loss = sat_to_gw_coeff * patch[0].surface_NO3;
 		hillslope[0].gw.NO3 += (N_loss * patch[0].area / hillslope[0].area);

@@ -1,5 +1,5 @@
 /*--------------------------------------------------------------*/
-/*                                                              */ 
+/*                                                              */
 /*		sort_patch_layers									*/
 /*                                                              */
 /*  NAME                                                        */
@@ -30,12 +30,12 @@ void sort_patch_layers( struct patch_object *patch)
 	/*--------------------------------------------------------------*/
 	/*  Local function declaration                                  */
 	/*--------------------------------------------------------------*/
-	int key_compare(void *,  void *);
+	int key_compare(const void *, const void *); /* T.N. Mar 2016 */
 	void	*alloc( 	size_t, char *, char *);
 	/*--------------------------------------------------------------*/
 	/*  Local variable definition.                                  */
 	/*--------------------------------------------------------------*/
-	int i, j,k;
+	int i, j, k;
 	int list_bottom;
 	double cover_fraction;
 	/*--------------------------------------------------------------*/

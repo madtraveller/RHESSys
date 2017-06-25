@@ -102,15 +102,15 @@ struct base_station_object *construct_netcdf_grid (
         struct	date first_date;
 
         char	first[MAXSTR];		//I use first & second for the while loop that reads the first base station file
-        char	second[MAXSTR];	
+        char	second[MAXSTR];
         double	eff_lai;
         double	screen_height;
         char	buffer[MAXSTR*100];
         char	buffertmax[MAXSTR*100];
         char	buffertmin[MAXSTR*100];
         char	bufferrain[MAXSTR*100];
-        char *lat_name = "lat";       
-        char *lon_name = "lon";    
+        char *lat_name = "lat";
+        char *lon_name = "lon";
 
         FILE*	base_station_file;
 
@@ -152,7 +152,7 @@ struct base_station_object *construct_netcdf_grid (
 
         /*--------------------------------------------------------------*/
         /* Allocate daily clim structures and clim seqs					*/
-        /*--------------------------------------------------------------*/	
+        /*--------------------------------------------------------------*/
 
         /* For each daily clim structure allocate clim seqs for all required & optional clims */
         base_station[0].daily_clim = (struct daily_clim_object *)
@@ -178,7 +178,7 @@ struct base_station_object *construct_netcdf_grid (
         base_station[0].daily_clim[0].Ldown = NULL;
         base_station[0].daily_clim[0].PAR_diffuse = NULL;
         base_station[0].daily_clim[0].PAR_direct = NULL;
-        base_station[0].daily_clim[0].daytime_rain_duration = NULL; 
+        base_station[0].daily_clim[0].daytime_rain_duration = NULL;
         base_station[0].daily_clim[0].relative_humidity = NULL;
         base_station[0].daily_clim[0].snow = NULL;
         base_station[0].daily_clim[0].tdewpoint = NULL;
@@ -194,7 +194,7 @@ struct base_station_object *construct_netcdf_grid (
 
         /*Check if any flags are set in the optional clim sequence struct*/
         if ( daily_flags.daytime_rain_duration == 1 ) {
-                base_station[0].daily_clim[0].daytime_rain_duration = (double *) 
+                base_station[0].daily_clim[0].daytime_rain_duration = (double *)
                         alloc(duration->day * sizeof(double),"day_rain_dur", "construct_netcdf_grid");
 
         }
@@ -204,9 +204,9 @@ struct base_station_object *construct_netcdf_grid (
         base_station[0].yearly_clim = (struct yearly_clim_object *)
                 alloc(1*sizeof(struct yearly_clim_object), "yearly_clim", "construct_netcdf_grid" );
         /*	Initialize non-critical sequences							*/
-        base_station[0].yearly_clim[0].temp = NULL;		
+        base_station[0].yearly_clim[0].temp = NULL;
         /*--------------------------------------------------------------*/
-        /*	Allocate the monthly clim object.							*/	
+        /*	Allocate the monthly clim object.							*/
         /*--------------------------------------------------------------*/
         base_station[0].monthly_clim = (struct monthly_clim_object *)
                 alloc(1*sizeof(struct monthly_clim_object), "monthly_clim", "construct_netcdf_grid" );
@@ -227,7 +227,7 @@ struct base_station_object *construct_netcdf_grid (
                         base_station_ncheader[0].year_start,
                         base_station_ncheader[0].leap_year);
 
-        //if( command_line[0].clim_repeat_flag ) { 
+        //if( command_line[0].clim_repeat_flag ) {
                 tempdata = (float *) alloc(duration->day * sizeof(float),"tempdata","construct_netcdf_grid");
         //}
         /* printf("net_y:%f net_x:%f\n",base_station[0].net_y,base_station[0].net_x);
@@ -290,7 +290,7 @@ struct base_station_object *construct_netcdf_grid (
                 else if (base_station_ncheader[0].temperature_unit == 'C')
                         base_station[0].daily_clim[0].tmin[j] =  (double)tempdata[j];
                 /*160517LML
-                  base_station[0].daily_clim[0].tmin[j] = 
+                  base_station[0].daily_clim[0].tmin[j] =
 #ifdef NETCDF_TEMPERATURE_UNIT_IS_KELVIN
 (double)tempdata[j] - 273.15;
 #else
@@ -361,7 +361,7 @@ struct base_station_object *construct_netcdf_grid (
         }
 
 
-        //if( command_line[0].clim_repeat_flag ) { 
+        //if( command_line[0].clim_repeat_flag ) {
                 free(tempdata);
         //}
         /*printf("\n      Construct netcdf cell: END ID=%d x=%lf y=%lf lai=%lf i=%d",
@@ -374,7 +374,7 @@ struct base_station_object *construct_netcdf_grid (
         *num_world_base_stations +=1;
         base_station_ncheader[0].lastID +=1;
 #endif
-        printf( "BASE STATION ID? %d\n", base_station[0].ID );
+        printf( "BASE STATION ID: %d\n", base_station[0].ID ); // T.N format
         return(base_station);
 }
 
