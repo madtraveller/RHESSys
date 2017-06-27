@@ -65,7 +65,7 @@ void		hillslope_hourly(
 	double  hourly_gw_Qout;
 	double	gw_Qout_ratio;
 	struct patch_object *patch;
-	
+
 	/*--------------------------------------------------------------*/
 	/*	Allocate the hillslope houly parameter array.				*/
 	/*--------------------------------------------------------------*/
@@ -102,7 +102,7 @@ void		hillslope_hourly(
 			current_date );
 	}
 	/*--------------------------------------------------------------*/
-	/*	Destroy the hillslope hourloy object.						*/
+	/*	Destroy the hillslope hourly object.						*/
 	/*--------------------------------------------------------------*/
 	free( hillslope[0].hourly );
 	/*----------------------------------------------------------------------*/
@@ -121,19 +121,19 @@ void		hillslope_hourly(
 	hillslope[0].hourly_streamflow_DON = 0.0;
 
 	if ((command_line[0].gw_flag > 0) && (hillslope[0].gw.storage > ZERO) && (command_line[0].gwtoriparian_flag==0)) {
-	    if (hillslope[0].defaults[0][0].gw_loss_fast_threshold < ZERO) {	
-		      hillslope[0].gw.hourly_Qout = hillslope[0].gw.storage * hillslope[0].slope / 1.571 * 
+	    if (hillslope[0].defaults[0][0].gw_loss_fast_threshold < ZERO) {
+		      hillslope[0].gw.hourly_Qout = hillslope[0].gw.storage * hillslope[0].slope / 1.571 *
 				  hillslope[0].defaults[0][0].gw_loss_coeff / 24;
 	    }
 	    else {
 		slow_store = min(hillslope[0].defaults[0][0].gw_loss_fast_threshold, hillslope[0].gw.storage);
-	      	hillslope[0].gw.hourly_Qout = slow_store * hillslope[0].slope / 1.571 * hillslope[0].defaults[0][0].gw_loss_coeff/24; 
+	      	hillslope[0].gw.hourly_Qout = slow_store * hillslope[0].slope / 1.571 * hillslope[0].defaults[0][0].gw_loss_coeff/24;
 		fast_store = max(0.0,hillslope[0].gw.storage - hillslope[0].defaults[0][0].gw_loss_fast_threshold);
-		hillslope[0].gw.hourly_Qout += fast_store * hillslope[0].slope / 1.571 * hillslope[0].defaults[0][0].gw_loss_fast_coeff/24; 
+		hillslope[0].gw.hourly_Qout += fast_store * hillslope[0].slope / 1.571 * hillslope[0].defaults[0][0].gw_loss_fast_coeff/24;
 	    }
 
 		hillslope[0].hourly_base_flow += hillslope[0].gw.hourly_Qout;
-		
+
 		hillslope[0].gw.hourly_NH4out = hillslope[0].gw.hourly_Qout * hillslope[0].gw.NH4 / hillslope[0].gw.storage;
 		hillslope[0].gw.hourly_NO3out = hillslope[0].gw.hourly_Qout * hillslope[0].gw.NO3 / hillslope[0].gw.storage;
 		hillslope[0].gw.hourly_DONout = hillslope[0].gw.hourly_Qout * hillslope[0].gw.DON / hillslope[0].gw.storage;
@@ -161,21 +161,21 @@ void		hillslope_hourly(
 		hillslope[0].streamflow_DON +=hillslope[0].hourly_streamflow_DON;
 
 	}
-	
+
 	if ((command_line[0].gw_flag > 0) && (hillslope[0].gw.storage > ZERO) && (command_line[0].gwtoriparian_flag == 1)) {
-		hillslope[0].gw.hourly_Qout = hillslope[0].gw.storage * hillslope[0].slope / 1.571 * 
+		hillslope[0].gw.hourly_Qout = hillslope[0].gw.storage * hillslope[0].slope / 1.571 *
 					hillslope[0].defaults[0][0].gw_loss_coeff / 24;
 
 
-		if (hillslope[0].defaults[0][0].gw_loss_fast_threshold < ZERO) {	
-			hillslope[0].gw.hourly_Qout = hillslope[0].gw.storage * hillslope[0].slope / 1.571 * 
+		if (hillslope[0].defaults[0][0].gw_loss_fast_threshold < ZERO) {
+			hillslope[0].gw.hourly_Qout = hillslope[0].gw.storage * hillslope[0].slope / 1.571 *
 					hillslope[0].defaults[0][0].gw_loss_coeff / 24;
 		}
 		else {
 			slow_store = min(hillslope[0].defaults[0][0].gw_loss_fast_threshold, hillslope[0].gw.storage);
-			hillslope[0].gw.hourly_Qout = slow_store * hillslope[0].slope / 1.571 * hillslope[0].defaults[0][0].gw_loss_coeff/24; 
+			hillslope[0].gw.hourly_Qout = slow_store * hillslope[0].slope / 1.571 * hillslope[0].defaults[0][0].gw_loss_coeff/24;
 			fast_store = max(0.0,hillslope[0].gw.storage - hillslope[0].defaults[0][0].gw_loss_fast_threshold);
-			hillslope[0].gw.hourly_Qout += fast_store * hillslope[0].slope / 1.571 * hillslope[0].defaults[0][0].gw_loss_fast_coeff/24; 
+			hillslope[0].gw.hourly_Qout += fast_store * hillslope[0].slope / 1.571 * hillslope[0].defaults[0][0].gw_loss_fast_coeff/24;
 	      	}
 
 		hillslope[0].gw.hourly_NH4out = hillslope[0].gw.hourly_Qout * hillslope[0].gw.NH4 / hillslope[0].gw.storage;
@@ -193,7 +193,7 @@ void		hillslope_hourly(
 			hillslope[0].hourly_streamflow_NH4 += hillslope[0].gw.hourly_NH4out;
 			hillslope[0].hourly_streamflow_DON += hillslope[0].gw.hourly_DONout;
 			hillslope[0].hourly_streamflow_DOC += hillslope[0].gw.hourly_DOCout;
-			
+
 			hillslope[0].hourly_base_flow += hillslope[0].gw.hourly_Qout;
 			hourly_gw_Qout = 0.0;
 		}
@@ -212,7 +212,7 @@ void		hillslope_hourly(
 		}
 
 
-		hillslope[0].gw.storage -= hillslope[0].gw.hourly_Qout;	
+		hillslope[0].gw.storage -= hillslope[0].gw.hourly_Qout;
 		hillslope[0].gw.NH4 -= hillslope[0].gw.hourly_NH4out;
 		hillslope[0].gw.NO3 -= hillslope[0].gw.hourly_NO3out;
 		hillslope[0].gw.DON -= hillslope[0].gw.hourly_DONout;
@@ -230,7 +230,7 @@ void		hillslope_hourly(
 	}
 	hillslope[0].gw.Qout += hillslope[0].gw.hourly_Qout; // this is the daily gw.Qout, used in hillslop_daily_F
 	hillslope[0].base_flow += hillslope[0].hourly_base_flow; // daily base_flow
- 
+
 
 
 } /*end hillslope_hourly.c*/

@@ -1063,7 +1063,7 @@ void		patch_daily_F(
 	/*	maximum height.  This is fine since if we assume that	*/
 	/*	The snowpack does not transmit shortwave or par		*/
 	/*	no vapour fluxes will take place anyways and only	*/
-	/*	respiration will occurr which we want .			*/
+	/*	respiration will occur which we want .			*/
 	/*								*/
 	/*	Patches under the snowpack but over the pond.		*/
 	/*	need to use previous day (or beginning of the day)	*/
@@ -1404,7 +1404,7 @@ void		patch_daily_F(
 
 		patch[0].detention_store -= infiltration;
 			/*--------------------------------------------------------------*/
-			/*	Determine if the infifltration will fill up the unsat	*/
+			/*	Determine if the infiltration will fill up the unsat	*/
 			/*	zone or not.						*/
 			/*	We use the strict assumption that sat deficit is the	*/
 			/*	amount of water needed to saturate the soil.		*/
@@ -1468,7 +1468,7 @@ void		patch_daily_F(
 			patch[0].rain_stored += strata->cover_fraction * strata->rain_stored ;
 			patch[0].snow_stored += strata->cover_fraction * strata->snow_stored ;
 			/*--------------------------------------------------------------*/
-			/*	Add uptranspiration demand 				*/
+			/*	Add up transpiration demand 				*/
 			/*--------------------------------------------------------------*/
 			unsat_zone_patch_demand += strata->cover_fraction
 				* strata->transpiration_unsat_zone;
@@ -1973,10 +1973,12 @@ void		patch_daily_F(
 
 		patch[0].recharge += rz_drainage; // T.N Apr. 2016
 	}
+
 	patch[0].unsat_drainage += unsat_drainage;
 	patch[0].rz_drainage += rz_drainage;
 	patch[0].hourly_unsat_drainage += unsat_drainage;
 	patch[0].hourly_rz_drainage += rz_drainage;
+
 	/* ---------------------------------------------- */
 	/*     Final rootzone saturation calculation      */
 	/* ---------------------------------------------- */

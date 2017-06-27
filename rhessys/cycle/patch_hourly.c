@@ -179,7 +179,7 @@ void		patch_hourly(
 					current_date );
 			}
 			/*--------------------------------------------------------------*/
-			/*	process any hourly throughfallthat falls on a snowpack */
+			/*	process any hourly throughfall that falls on a snowpack */
 			/*--------------------------------------------------------------*/
 			patch[0].hourly[0].rain_throughfall = patch[0].rain_throughfall_final;
 			patch[0].hourly[0].NO3_throughfall = patch[0].hourly[0].NO3_throughfall_final;
@@ -245,7 +245,7 @@ void		patch_hourly(
 	/* 	Above ground Hydrologic Processes			*/
 	/* 	compute infiltration into the soil			*/
 	/*	from snowmelt or rain_throughfall			*/
-	/*	for now assume that all water infilatrates		*/
+	/*	for now assume that all water infiltrates		*/
 	/*--------------------------------------------------------------*/
 	if (patch[0].detention_store > 0.0) {
 		/*------------------------------------------------------------------------*/
@@ -340,7 +340,7 @@ void		patch_hourly(
 	/* aggregate the hourly recharge */
 	//patch[0].recharge += infiltration;
 
-	} /* end if rain throughfall */
+	} /* end if rain throughfall | zone[0].hourly_rain_flag == 1 */
 	/*--------------------------------------------------------------*/
 	/*	Destroy the patch hourly object.							*/
 	/*--------------------------------------------------------------*/
@@ -427,13 +427,15 @@ void		patch_hourly(
 	/*--------------------------------------------------------------*/
 	/*      Recompute patch soil moisture storage                   */
 	/*--------------------------------------------------------------*/
-	if (patch[0].sat_deficit < ZERO) {
+	// Need to calculate hourly recharge here as well. patch_daily_F.c finalizes recharge for the last hour of the day
+	if (patch[0].sat_deficit < ZERO) { // water table is at or above the soil surface, gw discharge & no recharge
 		patch[0].S = 1.0;
 		patch[0].rootzone.S = 1.0;
 		rz_drainage = 0.0;
 		unsat_drainage = 0.0;
 	}
 	else if (patch[0].sat_deficit_z > patch[0].rootzone.depth)  {		/* Constant vertical profile of soil porosity */
+        // water table is in unsaturated zone, recharge = unsat_drainage
 		/*-------------------------------------------------------*/
 		/*	soil drainage and storage update	     	 */
 		/*-------------------------------------------------------*/
@@ -465,6 +467,8 @@ void		patch_hourly(
 
 		patch[0].unsat_storage -=  unsat_drainage;
 		patch[0].sat_deficit -=  unsat_drainage;
+
+		patch[0].recharge += unsat_drainage; //
 	}
 	else {
 		patch[0].rz_storage += patch[0].unsat_storage;	/* transfer left water in unsat storage to rootzone layer */
@@ -485,6 +489,8 @@ void		patch_hourly(
 
 		patch[0].rz_storage -=  rz_drainage;
 		patch[0].sat_deficit -=  rz_drainage;
+
+		patch[0].recharge += rz_drainage; //
 	}
 
 	patch[0].unsat_drainage += unsat_drainage;
