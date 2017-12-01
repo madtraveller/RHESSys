@@ -37,7 +37,7 @@ void	output_yearly_basin(
 	/*------------------------------------------------------*/
 	/*	Local Function Declarations.						*/
 	/*------------------------------------------------------*/
-	
+
 	/*------------------------------------------------------*/
 	/*	Local Variable Definition. 							*/
 	/*------------------------------------------------------*/
@@ -50,7 +50,7 @@ void	output_yearly_basin(
 
 
 	check = fprintf(outfile,
-		"%d %d %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %d %lf\n",
+		"%d %d %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %d %lf %lf\n",
 		current_date.year,
 		basin[0].ID,
 		basin[0].acc_year.streamflow * 1000.0,
@@ -65,11 +65,12 @@ void	output_yearly_basin(
 		basin[0].acc_year.mineralized * 1000.0,
 		basin[0].acc_year.uptake * 1000.0,
 		basin[0].acc_year.num_threshold,
-		basin[0].acc_year.PET * 1000.0
+		basin[0].acc_year.PET * 1000.0,
+		basin[0].acc_year.recharge * 1000.0 // T.N Nov 2017
 		);
 	if (check <= 0) {
 		fprintf(stdout,
-			"\nWARNING: output error has occured in output_yearly_basin");
+			"\nWARNING: output error has occurred in output_yearly_basin");
 	}
 	/*--------------------------------------------------------------*/
 	/*	reset accumulator variables				*/
@@ -83,11 +84,12 @@ void	output_yearly_basin(
 	basin[0].acc_year.length = 0;
 	basin[0].acc_year.DOC_loss = 0.0;
 	basin[0].acc_year.DON_loss = 0.0;
-	basin[0].acc_year.denitrif= 0.0;
-	basin[0].acc_year.nitrif= 0.0;
+	basin[0].acc_year.denitrif = 0.0;
+	basin[0].acc_year.nitrif = 0.0;
 	basin[0].acc_year.num_threshold = 0;
 	basin[0].acc_year.lai = 0.0;
 	basin[0].acc_year.mineralized = 0.0;
 	basin[0].acc_year.uptake = 0.0;
+	basin[0].acc_year.recharge = 0.0; // T.N Nov 2017
 	return;
 } /*end output_yearly_basin*/

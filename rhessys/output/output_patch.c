@@ -39,7 +39,7 @@ void	output_patch(
 	/*------------------------------------------------------*/
 	/*	Local Function Declarations.						*/
 	/*------------------------------------------------------*/
-	
+
 	/*------------------------------------------------------*/
 	/*	Local Variable Definition. 							*/
 	/*------------------------------------------------------*/
@@ -55,8 +55,8 @@ void	output_patch(
 	asub = 0.0;
 	alai = 0.0;
 	aheight = 0.0;
-	for ( layer=0 ; layer<patch[0].num_layers; layer++ ){
-		for ( c=0 ; c<patch[0].layers[layer].count; c++ ){
+	for ( layer = 0 ; layer < patch[0].num_layers; layer++ ){
+		for ( c = 0 ; c < patch[0].layers[layer].count; c++ ){
 			apsn += patch[0].canopy_strata[(patch[0].layers[layer].strata[c])][0].cover_fraction
 				* patch[0].canopy_strata[(patch[0].layers[layer].strata[c])][0].cs.net_psn ;
 			asub += patch[0].canopy_strata[(patch[0].layers[layer].strata[c])][0].cover_fraction
@@ -65,8 +65,6 @@ void	output_patch(
 				* patch[0].canopy_strata[(patch[0].layers[layer].strata[c])][0].epv.proj_lai;
 			aheight += patch[0].canopy_strata[(patch[0].layers[layer].strata[c])][0].cover_fraction
 				* patch[0].canopy_strata[(patch[0].layers[layer].strata[c])][0].epv.height;
-
-
 		}
 	}
 
@@ -93,7 +91,7 @@ void	output_patch(
 					patch[0].return_flow*1000.0,
 					patch[0].evaporation*1000.0,
 					patch[0].evaporation_surf*1000.0,
-					(patch[0].exfiltration_sat_zone + patch[0].exfiltration_unsat_zone) * 1000.0, 
+					(patch[0].exfiltration_sat_zone + patch[0].exfiltration_unsat_zone) * 1000.0,
 					patch[0].snowpack.water_equivalent_depth*1000.0,
 					patch[0].snow_melt*1000.0,
 					(patch[0].transpiration_sat_zone*1000.0), (patch[0].transpiration_unsat_zone)*1000.0,
@@ -104,16 +102,16 @@ void	output_patch(
 					patch[0].rootzone.depth*1000.0,
 					patch[0].litter.rain_stored*1000.0,
 					litterS,
-					patch[0].area, (patch[0].PET)*1000.0, alai, 
-					patch[0].base_flow*1000.0, 
-					patch[0].streamflow*1000.0, 1000.0*(zone[0].rain+zone[0].snow), patch[0].recharge, 
-					patch[0].Kdown_direct, patch[0].Kdown_diffuse, 
+					patch[0].area, (patch[0].PET)*1000.0, alai,
+					patch[0].base_flow*1000.0,
+					patch[0].streamflow*1000.0, 1000.0*(zone[0].rain+zone[0].snow), patch[0].recharge*1000.0, // T.N Nov 2017 missing 1000.0 factor
+					patch[0].Kdown_direct, patch[0].Kdown_diffuse,
 					patch[0].Kup_direct, patch[0].Kup_diffuse, patch[0].Lup,
-					patch[0].Kdown_direct_subcanopy, patch[0].Kdown_diffuse_subcanopy, patch[0].Ldown_subcanopy, 
+					patch[0].Kdown_direct_subcanopy, patch[0].Kdown_diffuse_subcanopy, patch[0].Ldown_subcanopy,
 					patch[0].Kstar_canopy,
 					patch[0].snowpack.Kstar_direct, patch[0].snowpack.Kstar_diffuse,
-					patch[0].Lstar_canopy, patch[0].Lstar_snow, patch[0].Lstar_soil, 
-					patch[0].wind, patch[0].windsnow, zone[0].wind, 
+					patch[0].Lstar_canopy, patch[0].Lstar_snow, patch[0].Lstar_soil,
+					patch[0].wind, patch[0].windsnow, zone[0].wind,
 					patch[0].ga*1000.0, patch[0].gasnow*1000.0,
 					patch[0].trans_reduc_perc,
 					patch[0].field_capacity,
@@ -132,10 +130,10 @@ void	output_patch(
 					patch[0].LE_canopy,
 					patch[0].snowpack.energy_deficit,
 					patch[0].snowpack.surface_age);
-	
+
 
 	if (check <= 0) {
-		fprintf(stdout, "\nWARNING: output error has occured in output_patch, file");
+		fprintf(stdout, "\nWARNING: output error has occurred in output_patch, file");
 	}
 	return;
 } /*end output_patch*/

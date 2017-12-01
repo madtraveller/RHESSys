@@ -47,7 +47,7 @@ void	output_monthly_basin(
 	if (basin->route_list->num_patches > 0)
 		basin[0].acc_month.length /= (basin->route_list->num_patches);
 	check = fprintf(outfile,
-		"%d %d %d %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf\n",
+		"%d %d %d %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf\n",
 		current_date.month,
 		current_date.year,
 		basin[0].ID,
@@ -61,7 +61,8 @@ void	output_monthly_basin(
 		basin[0].acc_month.lai/basin[0].acc_month.length ,
 		basin[0].acc_month.nitrif * 1000.0,
 		basin[0].acc_month.mineralized * 1000.0,
-		basin[0].acc_month.uptake * 1000.0
+		basin[0].acc_month.uptake * 1000.0,
+		basin[0].acc_month.recharge * 1000.0 // T.N Nov 2017
 		);
 	if (check <= 0) {
 		fprintf(stdout,
@@ -82,5 +83,6 @@ void	output_monthly_basin(
 	basin[0].acc_month.nitrif = 0.0; 
 	basin[0].acc_month.mineralized = 0.0; 
 	basin[0].acc_month.uptake = 0.0; 
+	basin[0].acc_month.recharge = 0.0; // T.N Nov 2017
 	return;
 } /*end output_monthly_basin*/

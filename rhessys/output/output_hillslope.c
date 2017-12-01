@@ -29,7 +29,7 @@
 #include <stdio.h>
 #include "rhessys.h"
 
-void	output_hillslope(				int basinID,
+void	output_hillslope(int basinID,
 						 struct	hillslope_object	*hillslope,
 						 struct	date	date,
 						 FILE *outfile)
@@ -41,7 +41,7 @@ void	output_hillslope(				int basinID,
 	/*------------------------------------------------------*/
 	/*	Local Variable Definition. 							*/
 	/*------------------------------------------------------*/
-	int z,p,c;
+	int z, p, c;
 	int layer;
 	double arain_throughfall;
 	double asnow_throughfall;
@@ -59,7 +59,8 @@ void	output_hillslope(				int basinID,
 	double apsn, alai;
 	double u20, au20; 
 	double aarea;
-	struct	patch_object  *patch;
+	double arecharge; // T.N Nov 2017
+	struct	patch_object *patch;
 	struct	zone_object	*zone;
 
 	/*--------------------------------------------------------------*/
@@ -81,10 +82,12 @@ void	output_hillslope(				int basinID,
 	abase_flow = 0.0;
 	apsn = 0.0 ;
 	alai = 0.0;
-	aarea =  0.0 ;
-	for (z=0; z<hillslope[0].num_zones; z++){
+	aarea =  0.0;
+	arecharge =  0.0;
+	
+	for (z = 0; z < hillslope[0].num_zones; z++){
 		zone = hillslope[0].zones[z];
-		for (p=0; p< zone[0].num_patches; p++){
+		for (p = 0; p < zone[0].num_patches; p++){
 			patch = zone[0].patches[p];
 			arain_throughfall += patch[0].rain_throughfall * patch[0].area;
 			asnow_throughfall += patch[0].snow_throughfall * patch[0].area;
@@ -105,14 +108,15 @@ void	output_hillslope(				int basinID,
 			areturn_flow += patch[0].return_flow * patch[0].area;
 			aevaporation += patch[0].evaporation * patch[0].area;
 			aarea += patch[0].area;
-			asnowpack += patch[0].snowpack.water_equivalent_depth  *  patch[0].area;
+			arecharge += patch[0].recharge * patch[0].area; // T.N Nov 2017
+			asnowpack += patch[0].snowpack.water_equivalent_depth * patch[0].area;
 			atranspiration += (patch[0].transpiration_sat_zone
-				+ patch[0].transpiration_unsat_zone)  *  patch[0].area;
+				+ patch[0].transpiration_unsat_zone) * patch[0].area;
 			if (patch[0].drainage_type == STREAM)  {
-				astreamflow += patch[0].streamflow*patch[0].area;
+				astreamflow += patch[0].streamflow * patch[0].area;
 			}
-			for ( layer=0 ; layer<patch[0].num_layers; layer++ ){
-				for ( c=0 ; c<patch[0].layers[layer].count; c++ ){
+			for ( layer = 0 ; layer < patch[0].num_layers; layer++ ){
+				for ( c = 0 ; c < patch[0].layers[layer].count; c++ ){
 					apsn += patch[0].canopy_strata[(patch[0].layers[layer].strata[c])][0].cover_fraction
 						* patch[0].canopy_strata[(patch[0].layers[layer].strata[c])][0].cs.net_psn
 						* patch[0].area;
@@ -127,24 +131,25 @@ void	output_hillslope(				int basinID,
 	arain_throughfall /=  aarea;
 	asnow_throughfall /= aarea ;
 	asat_deficit_z /= aarea ;
-	asat_deficit /= aarea ;
-	aunsat_storage /= aarea ;
-	aunsat_drainage /= aarea ;
+	asat_deficit /= aarea;
+	aunsat_storage /= aarea;
+	aunsat_drainage /= aarea;
 	acap_rise /= aarea ;
-	areturn_flow /= aarea ;
-	aevaporation /= aarea ;
+	areturn_flow /= aarea;
+	aevaporation /= aarea;
 	abase_flow /= aarea;
-	asnowpack /= aarea  ;
-	atranspiration /= aarea  ;
+	asnowpack /= aarea;
+	atranspiration /= aarea;
 	astreamflow /= aarea;
-	apsn /= aarea ;
-	alai /= aarea ;
+	apsn /= aarea;
+	alai /= aarea;
 	au20 /= aarea;
+	
+	arecharge /= aarea;
 
 	abase_flow += hillslope[0].base_flow;
 
-
-	fprintf(outfile,"%d %d %d %d %d %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf\n",
+	fprintf(outfile,"%d %d %d %d %d %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf\n",
 		date.day,
 		date.month,
 		date.year,
@@ -162,12 +167,13 @@ void	output_hillslope(				int basinID,
 		atranspiration * 1000.0,
 		abase_flow * 1000.0,
 		areturn_flow * 1000.0,
-		(astreamflow + abase_flow)* 1000.0,
+		(astreamflow + abase_flow) * 1000.0,
 		apsn,
 		alai,
-		hillslope[0].gw.Qout *1000.0,
-		hillslope[0].gw.storage *1000.0,
-		hillslope[0].area
+		hillslope[0].gw.Qout * 1000.0,
+		hillslope[0].gw.storage * 1000.0,
+		hillslope[0].area,
+		arecharge * 1000.0
 		);
 	return;
 } /*end output_hillslope*/

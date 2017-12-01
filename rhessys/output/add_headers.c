@@ -88,14 +88,6 @@ void add_headers(struct world_output_file_object *world_output_files,
 		//atmin, 
 		//asnow*1000.0 ,
 		"routedstreamflow");
-		
-	
-
-
-
-
-
-
 
 
 
@@ -157,19 +149,19 @@ void add_headers(struct world_output_file_object *world_output_files,
 		"routedstreamflow",
 		"canopy_snow",
 		"height",
-		"evap_can","evap_lit","evap_soil",
+		"evap_can", "evap_lit", "evap_soil",
 		"litrc",
-		"Kdown","Ldown","Kup","Lup",
-		"Kstar_can","Kstar_soil","Kstar_snow",
-		"Lstar_can","Lstar_soil","Lstar_snow",
-		"LE_canopy","LE_soil","LE_snow","Lstar_strat","canopydrip","ga");
+		"Kdown", "Ldown", "Kup", "Lup",
+		"Kstar_can", "Kstar_soil", "Kstar_snow",
+		"Lstar_can", "Lstar_soil", "Lstar_snow",
+		"LE_canopy", "LE_soil", "LE_snow", "Lstar_strat", "canopydrip", "ga");
 
 	/*--------------------------------------------------------------*/
 	/*	Monthly							*/
 	/*--------------------------------------------------------------*/
 	outfile = world_output_files[0].basin[0].monthly;
 	check = fprintf(outfile,
-		"%s %s %s %s %s %s %s %s %s %s %s %s %s %s\n", 
+		"%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s\n", 
 		"month",
 		"year",
 		"basinID",
@@ -183,13 +175,14 @@ void add_headers(struct world_output_file_object *world_output_files,
 		"lai",
 		"nitrif",
 		"mineralized",
-		"uptake");
+		"uptake",
+		"recharge");
 	/*--------------------------------------------------------------*/
 	/*	Yearly 							*/
 	/*--------------------------------------------------------------*/
 	outfile = world_output_files[0].basin[0].yearly;
 	check = fprintf(outfile,
-		"%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s\n", 
+		"%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s\n", 
 		"year",
 		"basinID",
 		"streamflow",
@@ -198,8 +191,8 @@ void add_headers(struct world_output_file_object *world_output_files,
 		"DOC",
 		"DON",
 		"et",
-		"psn","lai","nitrif",
-		"mineralized", "uptake", "num_thresh","pet");
+		"psn", "lai", "nitrif",
+		"mineralized", "uptake", "num_thresh", "pet", "recharge");
 	}
 
 	/*--------------------------------------------------------------*/
@@ -210,7 +203,7 @@ void add_headers(struct world_output_file_object *world_output_files,
 	/*	Daily 							*/
 	/*--------------------------------------------------------------*/
 	outfile = world_output_files[0].hillslope[0].daily;
-	fprintf(outfile,"%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s\n" ,
+	fprintf(outfile,"%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s\n" ,
 		"day",
 		"month",
 		"year",
@@ -233,7 +226,8 @@ void add_headers(struct world_output_file_object *world_output_files,
 		"lai",
 		"gw.Qout",
 		"gw.storage",
-		"area"
+		"area",
+		"recharge"
 		);
 
 	/*--------------------------------------------------------------*/
@@ -241,7 +235,7 @@ void add_headers(struct world_output_file_object *world_output_files,
 	/*--------------------------------------------------------------*/
 	outfile = world_output_files[0].hillslope[0].monthly;
 	check = fprintf(outfile,
-		"%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s\n", 
+		"%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s\n", 
 		"month",
 		"year",
 		"basinID",
@@ -257,13 +251,13 @@ void add_headers(struct world_output_file_object *world_output_files,
 		"lai",
 		"nitrif",
 		"mineralized",
-		"uptake","area");
+		"uptake", "area", "recharge");
 	/*--------------------------------------------------------------*/
 	/*	Yearly 							*/
 	/*--------------------------------------------------------------*/
 	outfile = world_output_files[0].hillslope[0].yearly;
 	check = fprintf(outfile,
-		"%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s\n", 
+		"%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s\n", 
 		"year",
 		"basinID",
 		"hillslopeID",
@@ -273,8 +267,8 @@ void add_headers(struct world_output_file_object *world_output_files,
 		"DOC",
 		"DON",
 		"et",
-		"psn","lai","nitrif",
-		"mineralized", "uptake","area");
+		"psn", "lai", "nitrif",
+		"mineralized", "uptake", "area", "recharge");
 	}
 	/*--------------------------------------------------------------*/
 	/*	Zone file headers					*/
@@ -301,11 +295,11 @@ void add_headers(struct world_output_file_object *world_output_files,
 		"PAR_direct",
 		"PAR_diffuse",
 		"Ldown",
-		"relH","aspect","z","slope","ehr","whr",
-		"tdew","edew",
+		"relH", "aspect", "z", "slope", "ehr", "whr",
+		"tdew", "edew",
 		"transmis",
 		"wind",
-		"deltaT","clearskytransmis","tcoeff1","cloudfrac");
+		"deltaT", "clearskytransmis", "tcoeff1", "cloudfrac");
 
 	/*--------------------------------------------------------------*/
 	/*	Monthly							*/
@@ -392,25 +386,25 @@ void add_headers(struct world_output_file_object *world_output_files,
 						"root_zone.S",
 						"root.depth",
 						"litter.rain_stor",
-						"litter.S","area","pet","lai","baseflow","streamflow","pcp","recharge",
-						"Kdowndirpch","Kdowndiffpch",
-						"Kupdirpch","Kupdifpch","Luppch",
-						"Kdowndirsubcan","Kdowndifsubcan","Ldownsubcan",
-						"Kstarcan","Kstardirsno","Kstardiffsno",
-						"Lstarcanopy","Lstarsnow","Lstarsoil", 
-						"wind","windsnow","windzone","ga","gasnow","trans_reduc_perc","pch_field_cap",
-						"overland_flow","height","ustar","snow_albedo",
-						"Kstarsoil","Kdowndirsurf","Kdowndifsurf","exfil_unsat",
-						"snow_Rnet","snow_QLE","snow_QH","snow_Qrain","snow_Qmelt",
+						"litter.S", "area", "pet", "lai", "baseflow", "streamflow", "pcp", "recharge",
+						"Kdowndirpch", "Kdowndiffpch",
+						"Kupdirpch", "Kupdifpch", "Luppch",
+						"Kdowndirsubcan", "Kdowndifsubcan", "Ldownsubcan",
+						"Kstarcan", "Kstardirsno", "Kstardiffsno",
+						"Lstarcanopy", "Lstarsnow", "Lstarsoil", 
+						"wind", "windsnow", "windzone", "ga", "gasnow", "trans_reduc_perc", "pch_field_cap",
+						"overland_flow", "height", "ustar", "snow_albedo",
+						"Kstarsoil", "Kdowndirsurf", "Kdowndifsurf", "exfil_unsat",
+						"snow_Rnet", "snow_QLE", "snow_QH", "snow_Qrain", "snow_Qmelt",
 						"LEcanopy",
-						"SED","snow_age");
+						"SED", "snow_age");
 		
 	/*--------------------------------------------------------------*/
 	/*	Monthly							*/
 	/*--------------------------------------------------------------*/
 	outfile = world_output_files[0].patch[0].monthly;
 	check = fprintf(outfile,
-		"%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s \n", 
+		"%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s\n", 
 		"month",
 		"year",
 		"basinID",
@@ -423,7 +417,7 @@ void add_headers(struct world_output_file_object *world_output_files,
 		"et",
 		"psn",
 		"DOC",
-		"DON","lai","nitrif","mineralized","uptake","theta","snow","area","nitrate","sminn");
+		"DON", "lai", "nitrif", "mineralized", "uptake", "theta", "snow", "area", "nitrate", "sminn", "recharge");
 	/*--------------------------------------------------------------*/
 	/*	Yearly							*/
 	/*--------------------------------------------------------------*/
@@ -442,11 +436,11 @@ void add_headers(struct world_output_file_object *world_output_files,
 			"DOC_loss",
 			"DON_loss",
 			"psn", "trans",
-			"et","lai","nitrif","mineralized",
-			"uptake","Theta","sd",
-			"pkswe", "pktrans", "pkpet", "streamflow", "Qin","Qout","rec.wyd","rec.pet.wyd", 
+			"et", "lai", "nitrif", "mineralized",
+			"uptake", "Theta", "sd",
+			"pkswe", "pktrans", "pkpet", "streamflow", "Qin", "Qout", "rec.wyd", "rec.pet.wyd", 
 			"ndays_sat", "ndays_sat70", "midsm_wyd",
-			"area","pet","pcp","burn","snowin","pot_recharge","recharge","recharge.wyd","pot_recharge.wyd"
+			"area", "pet", "pcp", "burn", "snowin", "pot_recharge", "recharge", "recharge.wyd", "pot_recharge.wyd"
 			);
 	}
 
@@ -483,10 +477,10 @@ void add_headers(struct world_output_file_object *world_output_files,
 		"rain_stored",
 		"snow_stored",
 		"rootzone.S",
-		"m_APAR","m_tavg","m_LWP","m_CO2","m_tmin","m_vpd","dC13",
-		"Kstar_dir","Kstar_dif",
-		"Lstar","surf_heat",
-		"height","covfrac","vegID");
+		"m_APAR", "m_tavg", "m_LWP", "m_CO2", "m_tmin", "m_vpd", "dC13",
+		"Kstar_dir", "Kstar_dif",
+		"Lstar", "surf_heat",
+		"height", "covfrac", "vegID");
 	/*--------------------------------------------------------------*/
 	/*	Monthly							*/
 	/*--------------------------------------------------------------*/
@@ -514,7 +508,7 @@ void add_headers(struct world_output_file_object *world_output_files,
 		"patchID",
 		"stratumID",
 		"psn",
-		"lwp","root_depth");
+		"lwp", "root_depth");
 	}
 	/*--------------------------------------------------------------*/
 	/*	Stream routing file headers					*/

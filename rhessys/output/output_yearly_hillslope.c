@@ -48,7 +48,7 @@ void	output_yearly_hillslope(	int basinID,
 
 
 	check = fprintf(outfile,
-		"%d %d %d %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %d\n",
+		"%d %d %d %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %d %lf\n",
 		current_date.year-1,
 		basinID,
 		hillslope[0].ID,
@@ -64,7 +64,8 @@ void	output_yearly_hillslope(	int basinID,
 		hillslope[0].acc_year.nitrif * 1000.0,
 		hillslope[0].acc_year.mineralized * 1000.0,
 		hillslope[0].acc_year.uptake * 1000.0,
-		hillslope[0].area
+		hillslope[0].area,
+		hillslope[0].acc_year.recharge * 1000.0 // T.N Nov 2017
 		);
 	if (check <= 0) {
 		fprintf(stdout,
@@ -87,5 +88,6 @@ void	output_yearly_hillslope(	int basinID,
 	hillslope[0].acc_year.lai = 0.0;
 	hillslope[0].acc_year.mineralized = 0.0;
 	hillslope[0].acc_year.uptake = 0.0;
+	hillslope[0].acc_year.recharge = 0.0; // T.N Nov 2017
 	return;
 } /*end output_yearly_hillslope*/

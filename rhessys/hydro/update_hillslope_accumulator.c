@@ -65,6 +65,8 @@ void update_hillslope_accumulator(
 					hillslope[0].acc_month.stream_NH4 += patch[0].streamflow_NH4 * scale;
 					hillslope[0].acc_month.psn += patch[0].net_plant_psn * scale;
 					hillslope[0].acc_month.lai += patch[0].lai * scale;
+
+					hillslope[0].acc_month.recharge += (patch[0].recharge) * scale; // T.N Nov 2017
 				}
 				if((command_line[0].output_flags.yearly == 1)&&(command_line[0].h != NULL)){
 					hillslope[0].acc_year.length += 1;
@@ -83,6 +85,8 @@ void update_hillslope_accumulator(
 						patch[0].transpiration_unsat_zone + patch[0].transpiration_sat_zone) * scale;
 					hillslope[0].acc_year.streamflow += (patch[0].streamflow) * scale;
 					hillslope[0].acc_year.lai += patch[0].lai * scale;
+
+					hillslope[0].acc_year.recharge += (patch[0].recharge) * scale; // T.N Nov 2017
 				}
 			} /* end of patch p  */
 		} /* end of zones z */

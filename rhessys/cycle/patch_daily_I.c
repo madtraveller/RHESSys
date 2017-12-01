@@ -535,7 +535,7 @@ void		patch_daily_I(
 			&(patch[0].cdf),
 			&(patch[0].ndf)
 			) != 0){
-			fprintf(stderr,"fATAL ERROR: in compute_potential_decomp() ... Exiting\n");
+			fprintf(stderr,"FATAL ERROR: in compute_potential_decomp() ... Exiting\n");
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -543,10 +543,10 @@ void		patch_daily_I(
 		/*--------------------------------------------------------------*/
 		/*	zeros the accumulative rain_throughfall for 24 hours	*/
 		/*--------------------------------------------------------------*/
-	patch[0].rain_throughfall_24hours=0.0;
-	patch[0].recharge=0;
-	patch[0].rz_drainage=0;
-	patch[0].unsat_drainage=0;
+	patch[0].rain_throughfall_24hours = 0.0;
+	//patch[0].recharge = 0.0; // T.N Nov 2017: initialize in construct_patch.c & zero_patch_daily_flux.c
+	patch[0].rz_drainage = 0.0;
+	patch[0].unsat_drainage = 0.0;
 
 	return;
 }/*end patch_daily_I.c*/

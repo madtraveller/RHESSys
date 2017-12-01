@@ -206,9 +206,9 @@ struct base_station_ncheader_object *construct_netcdf_header (
         base_station_ncheader[0].resolution_dd = calc_resolution(true,world[0].base_stations,world[0].num_base_stations);
         base_station_ncheader[0].resolution_meter = calc_resolution(false,world[0].base_stations,world[0].num_base_stations);
 	fclose(base_station_file);
-    printf("finish reading base info\n");
+    printf("\nFinish reading base info\n");
     //printf("\nFinished construct netcdf header: lastID=%d lai=%lf ht=%lf sdist=%lf yr=%d day=%d lpyr=%d pmult=%lf",
-    printf("\nFinished construct netcdf file: %s:\n\nnum_stations = %d\tresolution_dd = %lf\t\tyear_start = %d\tday_offset = %d\tlpyr = %d\tpmult = %lf\n\n", // T.N format
+	printf("\nFinished construct netcdf file: %s\n\nnum_stations = %d | resolution_dd = %lf | year_start = %d |day_offset = %d | lpyr = %d | pmult = %lf\n", // T.N format
            base_station_filename,
            world[0].num_base_stations,
            base_station_ncheader[0].resolution_dd,
@@ -236,7 +236,7 @@ double calc_resolution(const bool geographic_unit,const struct  base_station_obj
             sites[i].x = basestations[i][0].lon;
             sites[i].y = basestations[i][0].lat;
             #ifdef CHECK_NCCLIM_DATA
-            printf("Station_id = %d\t\tx_coordinate = %lf\ty_coordinate = %lf\n",basestations[i][0].ID,sites[i].x,sites[i].y); // T.N typo
+            //printf("Station_id = %d\t\tx_coordinate = %lf\ty_coordinate = %lf\n",basestations[i][0].ID,sites[i].x,sites[i].y); // T.N typo
             #endif
         } else {
             sites[i].x = basestations[i][0].proj_x;

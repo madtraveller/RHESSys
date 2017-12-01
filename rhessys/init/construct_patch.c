@@ -201,6 +201,8 @@ struct patch_object *construct_patch(
 	patch[0].detention_store = 0.0;
 	patch[0].soil_ns.DON = 0.0;
 	patch[0].soil_cs.DOC = 0.0;
+	
+	patch[0].recharge = 0.0; // T.N Nov 2017
 
 	/*--------------------------------------------------------------*/
 	/*      initialize accumulator variables for this patch         */
@@ -224,7 +226,7 @@ struct patch_object *construct_patch(
 	patch[0].acc_month.PET = 0.0;
 	patch[0].acc_month.psn = 0.0;
 	patch[0].acc_month.num_threshold = 0;
-
+    patch[0].acc_month.recharge = 0.0;  // T.N Nov 2017
 
 	patch[0].acc_year.burn = 0.0;
 	patch[0].acc_year.pcp = 0.0;

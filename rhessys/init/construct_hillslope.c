@@ -302,6 +302,7 @@ struct hillslope_object *construct_hillslope(
 	hillslope[0].acc_month.stream_NO3 = 0.0;
 	hillslope[0].acc_month.stream_NH4 = 0.0;
 	hillslope[0].acc_month.psn = 0.0;
+	hillslope[0].acc_month.recharge = 0.0;  // T.N Nov 2017
 
 	hillslope[0].acc_year.num_threshold = 0;
 	hillslope[0].acc_year.et = 0.0;
@@ -313,6 +314,7 @@ struct hillslope_object *construct_hillslope(
 	hillslope[0].acc_year.stream_NO3 = 0.0;
 	hillslope[0].acc_year.stream_NH4 = 0.0;
 	hillslope[0].acc_year.psn = 0.0;
+	hillslope[0].acc_year.recharge = 0.0; // T.N Nov 2017
 
 	return(hillslope);
 } /*end construct_hillslope.c*/

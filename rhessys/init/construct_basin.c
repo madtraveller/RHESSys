@@ -237,14 +237,14 @@ struct basin_object *construct_basin(
 		if (command_line[0].snow_scale_flag == 1) {
 			for (z = 0; z < basin[0].hillslopes[i][0].num_zones; z++) {
 				for (j=0; j < basin[0].hillslopes[i][0].zones[z][0].num_patches; j++) {
-				check_snow_scale +=
-				basin[0].hillslopes[i][0].zones[z][0].patches[j][0].snow_redist_scale *
-				basin[0].hillslopes[i][0].zones[z][0].patches[j][0].area;
+                    check_snow_scale +=
+                    basin[0].hillslopes[i][0].zones[z][0].patches[j][0].snow_redist_scale *
+                    basin[0].hillslopes[i][0].zones[z][0].patches[j][0].area;
 				}
 			}
 		}
 	};
-  printf("hillslopes complete\n");
+  printf(" Hillslopes complete\n");
 
 	basin[0].defaults[0][0].n_routing_timesteps =
 			(int) (n_routing_timesteps / basin[0].area);
@@ -262,7 +262,7 @@ struct basin_object *construct_basin(
 		if (command_line[0].snow_scale_tol > ZERO) {
 			if ((check_snow_scale > command_line[0].snow_scale_tol) ||
 				(check_snow_scale < 1/command_line[0].snow_scale_tol)) {
-				printf("Basin-wide  average snow scale %lf is outside tolerance %lf",
+				printf(" Basin-wide average snow scale %lf is outside tolerance %lf",
 				check_snow_scale, command_line[0].snow_scale_tol);
 				printf("\n Exiting\n");
 				exit(EXIT_FAILURE);
@@ -293,7 +293,7 @@ struct basin_object *construct_basin(
 	basin[0].acc_month.PET = 0.0;
 	basin[0].acc_month.psn = 0.0;
 	basin[0].acc_month.num_threshold = 0;
-
+    basin[0].acc_month.recharge = 0.0; // T.N Nov 2017
 
 	basin[0].acc_year.et = 0.0;
 	basin[0].acc_year.snowpack = 0.0;
@@ -315,6 +315,7 @@ struct basin_object *construct_basin(
 	basin[0].acc_year.PET = 0.0;
 	basin[0].acc_year.psn = 0.0;
 	basin[0].acc_year.num_threshold = 0;
+	basin[0].acc_year.recharge = 0.0;  // T.N Nov 2017
 
 	/*--------------------------------------------------------------*/
 	/*	Sort sub-hierarchy in the basin by elevation				*/

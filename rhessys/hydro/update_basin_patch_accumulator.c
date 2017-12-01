@@ -23,7 +23,7 @@
 /*											*/
 /*	PROGRAMMER NOTES								*/
 /*											*/
-/*											*/	
+/*											*/
 /*--------------------------------------------------------------*/
 #include <stdio.h>
 #include "rhessys.h"
@@ -42,7 +42,7 @@ void update_basin_patch_accumulator(
 	struct patch_object *patch;
 	/*----------------------------------------------------------------------*/
 	/* initializations		                                           */
-	/*----------------------------------------------------------------------*/	
+	/*----------------------------------------------------------------------*/
 
 	/*---------------------------------------------------------------------*/
 	/*update accumulator variables                                            */
@@ -90,6 +90,9 @@ void update_basin_patch_accumulator(
 					basin[0].acc_month.lai += patch[0].lai * scale;
 					basin[0].acc_month.leach += (patch[0].soil_ns.leach
 							+ patch[0].surface_ns_leach) * scale;
+
+                    basin[0].acc_month.recharge += (patch[0].recharge)
+							* scale; // T.N Nov 2017
 				}
 
 				if ((command_line[0].output_flags.yearly == 1)
@@ -132,6 +135,9 @@ void update_basin_patch_accumulator(
 					basin[0].acc_year.streamflow += (patch[0].streamflow)
 							* scale;
 					basin[0].acc_year.lai += patch[0].lai * scale;
+
+					basin[0].acc_year.recharge += (patch[0].recharge)
+							* scale; // T.N Nov 2017
 				}
 
 				if ((command_line[0].output_flags.monthly == 1)
@@ -165,6 +171,8 @@ void update_basin_patch_accumulator(
 					patch[0].acc_month.leach += (patch[0].soil_ns.leach
 							+ patch[0].surface_ns_leach);
 					patch[0].acc_month.length += 1;
+
+					patch[0].acc_month.recharge += patch[0].recharge;   // T.N Nov 2017
 
 				}
 				if ((command_line[0].output_flags.yearly == 1)
@@ -296,7 +304,7 @@ void update_basin_patch_accumulator(
 						patch[0].acc_year.midsm_wyd = patch[0].acc_year.wyd;
 
 					patch[0].acc_year.wyd = patch[0].acc_year.wyd + 1;
-		} /* end if */		
+		} /* end if */
 	} /* end of i*/
 
 

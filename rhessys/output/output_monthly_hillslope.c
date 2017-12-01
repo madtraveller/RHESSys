@@ -45,7 +45,7 @@ void	output_monthly_hillslope(	int basinID,
 	if (hillslope[0].acc_month.length == 0) hillslope[0].acc_month.length = 1;
 
 	check = fprintf(outfile,
-		"%d %d %d %d %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf\n",
+		"%d %d %d %d %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %d %lf\n",
 		current_date.month,
 		current_date.year,
 		basinID,
@@ -62,7 +62,8 @@ void	output_monthly_hillslope(	int basinID,
 		hillslope[0].acc_month.nitrif * 1000.0,
 		hillslope[0].acc_month.mineralized * 1000.0,
 		hillslope[0].acc_month.uptake * 1000.0,
-		hillslope[0].area
+		hillslope[0].area,
+		hillslope[0].acc_month.recharge * 1000.0 // T.N Nov 2017
 		);
 	if (check <= 0) {
 		fprintf(stdout,
@@ -84,5 +85,6 @@ void	output_monthly_hillslope(	int basinID,
 	hillslope[0].acc_month.nitrif = 0.0; 
 	hillslope[0].acc_month.mineralized = 0.0; 
 	hillslope[0].acc_month.uptake = 0.0; 
+	hillslope[0].acc_month.recharge = 0.0; // T.N Nov 2017
 	return;
 } /*end output_monthly_hillslope*/
